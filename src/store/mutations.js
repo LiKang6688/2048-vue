@@ -32,7 +32,6 @@ export const setStatus = (state, value) => {
   state.status.keepGoing = value.keepGoing;
 };
 
-
 export const addNewTile = (state, { randomTile, randomValue }) => {
   state.tiles.push({
     row: randomTile.x,
@@ -40,6 +39,37 @@ export const addNewTile = (state, { randomTile, randomValue }) => {
     value: randomValue,
   });
   LOG && window.console.log(state.tiles, "tiles");
+};
+
+export const setSteps = (state) => {
+  state.steps = [];
+};
+
+export const addSteps = (state) => {
+  let clonedState = JSON.parse(JSON.stringify(state));
+  LOG && window.console.log(clonedState, "clonedState");
+  LOG && window.console.log(state.steps, "steps");
+  state.steps.push({
+    tiles: clonedState.tiles,
+    grids: clonedState.grids,
+    stats: clonedState.stats,
+    isCollided: clonedState.isCollided,
+    status: clonedState.status,
+  });
+  LOG && window.console.log(state.steps, "steps");
+  if (state.steps.length - 1 > state.maxSteps) state.steps.shift();
+};
+
+export const undo = (state) => {
+  state.steps.splice(-1, 1);
+  LOG && window.console.log(state.steps, "step");
+  const step = JSON.parse(JSON.stringify(state.steps[0]));
+  state.tiles = step.tiles;
+  state.grids = step.grids;
+  state.stats = step.stats;
+  state.isCollided = step.isCollided;
+  state.status = step.status;
+  LOG && window.console.log(state, "state");
 };
 
 // The user's score starts at zero,
@@ -70,7 +100,7 @@ const getFilledTiles = (state) => {
   return filledTiles;
 };
 
-const transferGridToTile = (state, value) => {
+const transferGridsToTiles = (state, value) => {
   const [row, column] = state.boardSize;
   let tiles = [];
   for (let x = 0; x < row; x++) {
@@ -121,7 +151,7 @@ export const tilesSlideUp = (state) => {
     }
   }
   LOG && window.console.log(state.grids, "grids");
-  transferGridToTile(state, grids);
+  transferGridsToTiles(state, grids);
 };
 
 export const tilesSlideDown = (state) => {
@@ -143,7 +173,7 @@ export const tilesSlideDown = (state) => {
     }
   }
   LOG && window.console.log(state.grids, "grids");
-  transferGridToTile(state, grids);
+  transferGridsToTiles(state, grids);
 };
 
 export const tilesSlideLeft = (state) => {
@@ -169,7 +199,7 @@ export const tilesSlideLeft = (state) => {
     }
   }
   LOG && window.console.log(state.grids, "grids");
-  transferGridToTile(state, grids);
+  transferGridsToTiles(state, grids);
 };
 
 export const tilesSlideRight = (state) => {
@@ -197,7 +227,7 @@ export const tilesSlideRight = (state) => {
     }
   }
   LOG && window.console.log(state.grids, "grids");
-  transferGridToTile(state, grids);
+  transferGridsToTiles(state, grids);
 };
 
 // If two tiles of the same number collide while moving,
