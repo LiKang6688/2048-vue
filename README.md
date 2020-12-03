@@ -1,26 +1,40 @@
 # 2048-vue
 
+### About
+
+a clone of 2048 game
+
+### Technology stack
+
+- Vue 2
+- Vuex
+- Vanilla JavaScript
+
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
-***
+---
 
 ### Features
 
@@ -36,7 +50,7 @@ npm run lint
 
 - Display a message when the game is ‘won’ or 'game over'
 
-~~~ 
+```
  tiles: [
    { row: 0, column: 0, value: 2 },
    { row: 0, column: 1, value: 4 },
@@ -53,7 +67,7 @@ npm run lint
    { row: 3, column: 0, value: 8192 },
    { row: 3, column: 1, value: 16384 },
    { row: 3, column: 2, value: 32768 },
-   { row: 3, column: 3, value: 65536 }, 
+   { row: 3, column: 3, value: 65536 },
  ],
 
 
@@ -63,4 +77,4 @@ npm run lint
    [512, 1024, 2048, 4096],
    [8192, 16384, 32768, 65536],
  ],
- ~~~ 
+```
