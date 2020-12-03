@@ -35,7 +35,6 @@ export default {
       return this.$store.state.boardSize;
     },
     grids() {
-      // LOG && window.console.log(this.$store.state.grids, "grids");
       return this.$store.state.grids;
     },
     isCollided() {
@@ -49,11 +48,13 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("RestartGame");
-    // Every turn, two new tiles randomly appear in an empty spot on the board
-    // with a value of either 2 or 4.
-    for (let index = 0; index < this.initalTiles; index++)
-      this.$store.dispatch("GenerateOneRandomTile");
+    if (this.tiles.length === 0) {
+      this.$store.dispatch("RestartGame");
+      // Every turn, two new tiles randomly appear in an empty spot on the board
+      // with a value of either 2 or 4.
+      for (let index = 0; index < this.initalTiles; index++)
+        this.$store.dispatch("GenerateOneRandomTile");
+    }
   },
   mounted() {
     this.addKeyAndSwipe();
