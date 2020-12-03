@@ -25,7 +25,6 @@ export default {
   mounted() {
     this.getContainerWidth();
   },
-
   methods: {
     getContainerWidth() {
       LOG && window.console.log(this.$refs.container.clientWidth, "width");
