@@ -1,4 +1,4 @@
 window._env_ = {
   ENV: "local",
-  LOG: false,
+  LOG: true,
 };
