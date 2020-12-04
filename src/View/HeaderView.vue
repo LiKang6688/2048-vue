@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1>2048</h1>
-    <score class="scores" :width="width" />
+    <div>
+      <h1>2048</h1>
+      <score class="scores" :width="width" />
+    </div>
     <configuration class="configuration" :initalTiles="initalTiles" />
     <menu-section class="menu-section" :initalTiles="initalTiles" />
   </div>
@@ -40,6 +42,7 @@ h1 {
 }
 .scores {
   float: right;
+  display: flex;
 }
 .configuration {
   display: flex;

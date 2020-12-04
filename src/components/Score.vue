@@ -1,6 +1,6 @@
 <template>
-  <div class="scores">
-    <div class="score" :style="scoreStyle">
+  <div>
+    <div class="score current-score" :style="scoreStyle">
       <div class="name">SCORE</div>
       <div class="value">{{ currentScore }}</div>
     </div>
@@ -29,7 +29,7 @@ export default {
       return this.$store.state.stats.bestScore;
     },
     scoreStyle() {
-      return { width: this.width / 5 + "px" };
+      return { width: this.width / 6 + "px" };
     },
   },
 };
@@ -39,7 +39,6 @@ export default {
 .score {
   padding: 0.4em 0.4em;
   position: relative;
-  display: inline-block;
   background: #bbada0;
   font-weight: bold;
   border-radius: 3px;
@@ -47,6 +46,11 @@ export default {
   margin-top: 1.4em;
   margin-left: 0.8em;
   text-align: center;
+}
+.current-score {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .score .name {
   font-size: 1em;

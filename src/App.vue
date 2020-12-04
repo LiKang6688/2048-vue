@@ -74,6 +74,8 @@ body {
 }
 .header {
   margin-top: 2em;
+  display: flex;
+  flex-direction: column;
 }
 button {
   font-weight: inherit;
