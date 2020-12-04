@@ -10,7 +10,7 @@ export const RestartGame = ({ commit }) => {
     gameOver: false,
     keepGoing: false,
   });
-  commit("setSteps", []);
+  commit("setUndoSteps", []);
 };
 
 export const GenerateOneRandomTile = ({ commit, state }) => {
