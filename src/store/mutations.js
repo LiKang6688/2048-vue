@@ -44,6 +44,10 @@ export const setWinValue = (state, value) => {
   state.winValue = value;
 };
 
+export const setMaxUndoSteps = (state, value) => {
+  state.maxUndoSteps = value;
+};
+
 export const addNewTile = (state, { randomTile, randomValue }) => {
   state.tiles.push({
     row: randomTile.x,
@@ -54,28 +58,30 @@ export const addNewTile = (state, { randomTile, randomValue }) => {
 };
 
 export const setSteps = (state) => {
-  state.steps = [];
+  state.undoSteps = [];
 };
 
 export const addSteps = (state) => {
   let clonedState = JSON.parse(JSON.stringify(state));
   LOG && window.console.log(clonedState, "clonedState");
-  LOG && window.console.log(state.steps, "steps");
-  state.steps.push({
+  LOG && window.console.log(state.undoSteps, "undoSteps");
+  state.undoSteps.push({
     tiles: clonedState.tiles,
     grids: clonedState.grids,
     stats: clonedState.stats,
     isCollided: clonedState.isCollided,
     status: clonedState.status,
   });
-  LOG && window.console.log(state.steps, "steps");
-  if (state.steps.length - 1 > state.maxSteps) state.steps.shift();
+  LOG && window.console.log(state.undoSteps, "undoSteps");
+  if (state.undoSteps.length - 1 > state.maxUndoSteps) state.undoSteps.shift();
 };
 
 export const undo = (state) => {
-  state.steps.splice(-1, 1);
-  LOG && window.console.log(state.steps, "step");
-  const step = JSON.parse(JSON.stringify(state.steps[0]));
+  state.undoSteps.splice(-1, 1);
+  LOG && window.console.log(state.undoSteps, "step");
+  const step = JSON.parse(
+    JSON.stringify(state.undoSteps[state.undoSteps.length - 1])
+  );
   state.tiles = step.tiles;
   state.grids = step.grids;
   state.stats = step.stats;

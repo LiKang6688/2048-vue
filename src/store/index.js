@@ -21,8 +21,8 @@ const state = () => ({
     gameOver: false,
     keepGoing: false,
   },
-  steps: [],
-  maxSteps: 1,
+  undoSteps: [],
+  maxUndoSteps: 2,
   winValue: 2048,
   boardSize: [4, 4], //row, column
 });
@@ -36,9 +36,9 @@ const store = new Vuex.Store({
   modules: {},
 });
 
-store.subscribe((mutation, state) => {
-  // LOG && window.console.log(state, "state");
-  localStorage.setItem("state", JSON.stringify(state));
-});
+// store.subscribe((mutation, state) => {
+// LOG && window.console.log(state, "state");
+// localStorage.setItem("state", JSON.stringify(state));
+// });
 
 export default store;
