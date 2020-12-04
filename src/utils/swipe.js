@@ -7,10 +7,18 @@ const SWIPE_MAP = {
 
 export function removeSwipeListenner(el) {
   let touchsurface = el,
-    listenerTouchStart = () => {},
-    listenerTouchEnd = () => {},
-    listenerTouchCancel = () => {},
-    listenerTouchMove = () => {};
+    listenerTouchStart = (event) => {
+      event.preventDefault();
+    },
+    listenerTouchEnd = (event) => {
+      event.preventDefault();
+    },
+    listenerTouchCancel = (event) => {
+      event.preventDefault();
+    },
+    listenerTouchMove = (event) => {
+      event.preventDefault();
+    };
   touchsurface.removeEventListener("touchstart", listenerTouchStart, false);
   touchsurface.removeEventListener("touchend", listenerTouchEnd, false);
   touchsurface.removeEventListener("touchcancel", listenerTouchCancel, false);
