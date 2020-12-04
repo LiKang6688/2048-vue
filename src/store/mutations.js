@@ -57,7 +57,7 @@ export const addNewTile = (state, { randomTile, randomValue }) => {
   LOG && window.console.log(state.tiles, "tiles");
 };
 
-export const setSteps = (state) => {
+export const setUndoSteps = (state) => {
   state.undoSteps = [];
 };
 
