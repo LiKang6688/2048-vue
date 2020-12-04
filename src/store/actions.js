@@ -21,35 +21,36 @@ export const GenerateOneRandomTile = ({ commit, state }) => {
   const random2_4 = () => {
     return Math.round(Math.random()) * 2 + 2;
   };
-  //  find empty spots on the board
-  const findEmptySpots = () => {
-    const [row, column] = state.boardSize;
-    LOG && window.console.log(row, column);
-    const grids = state.grids;
-    LOG && window.console.log(grids, "grids");
-    let emptySpots = [];
-    for (let x = 0; x < row; x++) {
-      for (let y = 0; y < column; y++) {
-        if (grids[x][y] === 0)
-          emptySpots.push({
-            x,
-            y,
-          });
-      }
+  const randomTile = (emptySpots) => {
+    LOG && window.console.log(emptySpots, "emptySpots");
+    if (emptySpots.length > 0) {
+      const randomTile =
+        emptySpots[Math.floor(Math.random() * emptySpots.length)];
+      // LOG && window.console.log(randomTile, "randomTile");
+      const randomValue = random2_4();
+      // LOG && window.console.log(randomValue, "randomValue");
+      commit("addNewTile", { randomTile, randomValue });
+      commit("occupyGrid", { randomTile, randomValue });
     }
-    return emptySpots;
   };
 
-  const emptySpots = findEmptySpots();
-  LOG && window.console.log(emptySpots, "emptySpots");
-  if (emptySpots.length > 0) {
-    const randomTile =
-      emptySpots[Math.floor(Math.random() * emptySpots.length)];
-    // LOG && window.console.log(randomTile, "randomTile");
-    const randomValue = random2_4();
-    // LOG && window.console.log(randomValue, "randomValue");
-    commit("addNewTile", { randomTile, randomValue });
-    commit("occupyGrid", { randomTile, randomValue });
+  const [row, column] = state.boardSize;
+  // LOG && window.console.log(row, column);
+  const grids = state.grids;
+  // LOG && window.console.log(grids, "grids");
+  let emptySpots = [];
+  for (let x = 0; x < row; x++) {
+    for (let y = 0; y < column; y++) {
+      if (grids[x][y] === 0)
+        //  find empty spots on the board
+        emptySpots.push({
+          x,
+          y,
+        });
+      if (x === row - 1 && y === column - 1) {
+        randomTile(emptySpots);
+      }
+    }
   }
 };
 
@@ -67,25 +68,37 @@ export const UndoSteps = ({ commit }) => {
 };
 
 export const TilesSlideUp = ({ commit }) => {
-  commit("tilesSlideUp");
-  commit("mergeCollidedTilesForUpMove");
-  commit("tilesSlideUp");
+  return new Promise((resolve) => {
+    commit("tilesSlideUp");
+    commit("mergeCollidedTilesForUpMove");
+    commit("tilesSlideUp");
+    resolve();
+  });
 };
 
 export const TilesSlideDown = ({ commit }) => {
-  commit("tilesSlideDown");
-  commit("mergeCollidedTilesForDownMove");
-  commit("tilesSlideDown");
+  return new Promise((resolve) => {
+    commit("tilesSlideDown");
+    commit("mergeCollidedTilesForDownMove");
+    commit("tilesSlideDown");
+    resolve();
+  });
 };
 
 export const TilesSlideLeft = ({ commit }) => {
-  commit("tilesSlideLeft");
-  commit("mergeCollidedTilesForLeftMove");
-  commit("tilesSlideLeft");
+  return new Promise((resolve) => {
+    commit("tilesSlideLeft");
+    commit("mergeCollidedTilesForLeftMove");
+    commit("tilesSlideLeft");
+    resolve();
+  });
 };
 
 export const TilesSlideRight = ({ commit }) => {
-  commit("tilesSlideRight");
-  commit("mergeCollidedTilesForRightMove");
-  commit("tilesSlideRight");
+  return new Promise((resolve) => {
+    commit("tilesSlideRight");
+    commit("mergeCollidedTilesForRightMove");
+    commit("tilesSlideRight");
+    resolve();
+  });
 };

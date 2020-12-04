@@ -186,36 +186,40 @@ export default {
         case "ArrowUp": {
           LOG && window.console.log("ArrowUp");
           if (this.canTilesSlideUp()) {
-            this.$store.dispatch("TilesSlideUp");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideUp").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
         case "ArrowDown": {
           LOG && window.console.log("ArrowDown");
           if (this.canTilesSlideDown()) {
-            this.$store.dispatch("TilesSlideDown");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideDown").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
         case "ArrowLeft": {
           LOG && window.console.log("ArrowLeft");
           if (this.canTilesSlideLeft()) {
-            this.$store.dispatch("TilesSlideLeft");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideLeft").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
         case "ArrowRight": {
           LOG && window.console.log("ArrowRight");
           if (this.canTilesSlideRight()) {
-            this.$store.dispatch("TilesSlideRight");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideRight").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
