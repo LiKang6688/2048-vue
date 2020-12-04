@@ -24,7 +24,7 @@ const state = () => ({
     gameOver: false,
     keepGoing: false,
   },
-  winValue: 8,
+  winValue: 2048,
 });
 
 const store = new Vuex.Store({

@@ -32,6 +32,17 @@ export const setStatus = (state, value) => {
   state.status.keepGoing = value.keepGoing;
 };
 
+export const setRow = (state, value) => {
+  state.boardSize[0] = value;
+};
+
+export const setColumn = (state, value) => {
+  state.boardSize[1] = value;
+};
+
+export const setWinValue = (state, value) => {
+  state.winValue = value;
+};
 
 export const addNewTile = (state, { randomTile, randomValue }) => {
   state.tiles.push({
