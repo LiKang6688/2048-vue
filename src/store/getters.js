@@ -9,3 +9,7 @@ export const column = (state) => {
 export const goal = (state) => {
   return state.winValue;
 };
+
+export const stepsLength = (state) => {
+  return state.steps.length - 1;
+};
