@@ -36,9 +36,9 @@ const store = new Vuex.Store({
   modules: {},
 });
 
-store.subscribe((mutation, state) => {
-  // LOG && window.console.log(state, "state");
-  localStorage.setItem("state", JSON.stringify(state));
-});
+// store.subscribe((mutation, state) => {
+// LOG && window.console.log(state, "state");
+// localStorage.setItem("state", JSON.stringify(state));
+// });
 
 export default store;
