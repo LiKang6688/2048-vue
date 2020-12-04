@@ -76,10 +76,12 @@ export default {
   },
   methods: {
     restartGame() {
-      this.$store.dispatch("RestartGame");
-      for (let index = 0; index < this.initalTiles; index++)
-        this.$store.dispatch("GenerateOneRandomTile");
-      this.$store.commit("addSteps");
+      this.$store.dispatch("RestartGame").then(() => {
+        for (let index = 0; index < this.initalTiles; index++) {
+          this.$store.dispatch("GenerateOneRandomTile");
+          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+        }
+      });
     },
     onChangeRow(event) {
       const row = parseInt(event.target.value);
