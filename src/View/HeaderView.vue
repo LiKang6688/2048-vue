@@ -42,6 +42,7 @@ h1 {
 }
 .scores {
   float: right;
+  display: flex;
 }
 .configuration {
   display: flex;
