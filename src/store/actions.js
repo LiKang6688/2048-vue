@@ -1,16 +1,19 @@
 const LOG = window._env_.LOG;
 
 export const RestartGame = ({ commit }) => {
-  commit("initGrids");
-  commit("setCurrentScore", 0);
-  commit("setTiles", []);
-  commit("setStatus", {
-    gameEnd: false,
-    win: false,
-    gameOver: false,
-    keepGoing: false,
+  return new Promise((resolve) => {
+    commit("initGrids");
+    commit("setCurrentScore", 0);
+    commit("setTiles", []);
+    commit("setStatus", {
+      gameEnd: false,
+      win: false,
+      gameOver: false,
+      keepGoing: false,
+    });
+    commit("setUndoSteps", []);
+    resolve();
   });
-  commit("setUndoSteps", []);
 };
 
 export const GenerateOneRandomTile = ({ commit, state }) => {
