@@ -54,6 +54,7 @@ export default {
       // with a value of either 2 or 4.
       for (let index = 0; index < this.initalTiles; index++)
         this.$store.dispatch("GenerateOneRandomTile");
+      this.$store.commit("addSteps");
     }
   },
   mounted() {
@@ -140,7 +141,7 @@ export default {
     },
     canTilesSlideRight() {
       const [row, column] = this.boardSize;
-      // LOG && window.console.log(this.grids, "grids");
+      LOG && window.console.log(this.grids, "grids");
       for (let i = 0; i < row; i++) {
         for (let j = 0; j < column - 1; j++) {
           // LOG && window.console.log(this.grids[i][j], i, j, "grid");
@@ -183,6 +184,7 @@ export default {
           if (this.canTilesSlideUp()) {
             this.$store.dispatch("TilesSlideUp");
             this.generateOneRandomTile();
+            this.$store.commit("addSteps");
           }
           break;
         }
@@ -191,6 +193,7 @@ export default {
           if (this.canTilesSlideDown()) {
             this.$store.dispatch("TilesSlideDown");
             this.generateOneRandomTile();
+            this.$store.commit("addSteps");
           }
           break;
         }
@@ -199,6 +202,7 @@ export default {
           if (this.canTilesSlideLeft()) {
             this.$store.dispatch("TilesSlideLeft");
             this.generateOneRandomTile();
+            this.$store.commit("addSteps");
           }
           break;
         }
@@ -207,6 +211,7 @@ export default {
           if (this.canTilesSlideRight()) {
             this.$store.dispatch("TilesSlideRight");
             this.generateOneRandomTile();
+            this.$store.commit("addSteps");
           }
           break;
         }
