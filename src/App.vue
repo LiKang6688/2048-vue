@@ -73,7 +73,7 @@ body {
   height: 100%;
 }
 .header {
-  margin-top: 4em;
+  margin-top: 2em;
 }
 button {
   font-weight: inherit;
