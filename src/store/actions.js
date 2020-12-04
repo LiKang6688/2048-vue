@@ -21,7 +21,9 @@ export const GenerateOneRandomTile = ({ commit, state }) => {
   //  find empty spots on the board
   const findEmptySpots = () => {
     const [row, column] = state.boardSize;
+    LOG && window.console.log(row, column);
     const grids = state.grids;
+    LOG && window.console.log(grids, "grids");
     let emptySpots = [];
     for (let x = 0; x < row; x++) {
       for (let y = 0; y < column; y++) {

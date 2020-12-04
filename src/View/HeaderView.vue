@@ -2,18 +2,21 @@
   <div>
     <h1>2048</h1>
     <score class="scores" :width="width" />
+    <configuration class="configuration" :initalTiles="initalTiles" />
     <menu-section class="menu-section" :initalTiles="initalTiles" />
   </div>
 </template>
 
 <script>
 import Score from "../components/Score.vue";
+import Configuration from "../components/Configuration.vue";
 import MenuSection from "../components/MenuSection.vue";
 
 export default {
   name: "HeaderView",
   components: {
     Score,
+    Configuration,
     MenuSection,
   },
   props: {
@@ -26,7 +29,6 @@ export default {
       required: true,
     },
   },
-  data: () => ({}),
 };
 </script>
 
@@ -38,6 +40,14 @@ h1 {
 }
 .scores {
   float: right;
+}
+.configuration {
+  display: flex;
+  text-align: center;
+  padding-top: 1.4em;
+  font-size: 1em;
+  white-space: nowrap;
+  justify-content: flex-end;
 }
 .menu-section {
   text-align: right;
