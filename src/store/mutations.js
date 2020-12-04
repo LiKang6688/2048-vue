@@ -100,7 +100,7 @@ const increaseScore = (state, value) => {
 
 // get all TileItems which are not zero
 const getFilledTiles = (state) => {
-  window.console.log(state, "state");
+  LOG && window.console.log(state, "state");
   const [row, column] = state.boardSize;
   const grids = state.grids;
   let filledTiles = [];

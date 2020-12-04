@@ -22,7 +22,7 @@ const state = () => ({
     keepGoing: false,
   },
   undoSteps: [],
-  maxUndoSteps: 2,
+  maxUndoSteps: 1,
   winValue: 2048,
   boardSize: [4, 4], //row, column
 });
