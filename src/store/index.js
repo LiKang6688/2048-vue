@@ -37,7 +37,7 @@ const store = new Vuex.Store({
 });
 
 store.subscribe((mutation, state) => {
-  LOG && window.console.log(state, "state");
+  // LOG && window.console.log(state, "state");
   localStorage.setItem("state", JSON.stringify(state));
 });
 
