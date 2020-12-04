@@ -2,7 +2,7 @@
   <div>
     <h1>2048</h1>
     <score class="scores" :width="width" />
-    <configuration class="configuration" />
+    <configuration class="configuration" :initalTiles="initalTiles" />
     <menu-section class="menu-section" :initalTiles="initalTiles" />
   </div>
 </template>
@@ -29,7 +29,6 @@ export default {
       required: true,
     },
   },
-  data: () => ({}),
 };
 </script>
 

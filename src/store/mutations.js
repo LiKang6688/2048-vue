@@ -33,11 +33,11 @@ export const setStatus = (state, value) => {
 };
 
 export const setRow = (state, value) => {
-  state.boardSize[0] = value;
+  state.boardSize.splice(0, 1, value);
 };
 
 export const setColumn = (state, value) => {
-  state.boardSize[1] = value;
+  state.boardSize.splice(1, 1, value);
 };
 
 export const setWinValue = (state, value) => {
@@ -96,7 +96,7 @@ const increaseScore = (state, value) => {
 const getFilledTiles = (state) => {
   window.console.log(state, "state");
   const [row, column] = state.boardSize;
-  const grids = [...state.grids];
+  const grids = state.grids;
   let filledTiles = [];
   for (let i = 0; i < row; i++) {
     for (let j = 0; j < column; j++) {
@@ -132,15 +132,15 @@ const transferGridsToTiles = (state, value) => {
 export const tilesSlideUp = (state) => {
   const filledTiles = getFilledTiles(state);
   // LOG && window.console.log(filledTiles, "filledTiles");
-  const [column] = state.boardSize;
+  const [, column] = state.boardSize;
   let grids = state.grids;
   let lineFilledTiles = [];
   for (let i = 0; i < column; i++) {
     // for example: the first column is
-    // [0,
-    //  2,
-    //  0,
-    //  4],
+    // [0,    [2,
+    //  2, ->  4,
+    //  0,     0,
+    //  4],    0]
     // find the tiles is not 0
     lineFilledTiles = filledTiles.filter(function(item) {
       return item.column === i;
@@ -154,6 +154,7 @@ export const tilesSlideUp = (state) => {
       //  0,
       //  0,
       //  0];
+      // make not zero tiles to be zero
       grids[lineFilledTiles[j].row][lineFilledTiles[j].column] = 0;
       // [2,
       //  4,
@@ -168,23 +169,28 @@ export const tilesSlideUp = (state) => {
 
 export const tilesSlideDown = (state) => {
   const filledTiles = getFilledTiles(state);
-  // LOG && window.console.log(filledTiles, "filledTiles");
-  const [column] = state.boardSize;
+  const [row, column] = state.boardSize;
   let grids = state.grids;
   let lineFilledTiles = [];
+  // [0,    [0,
+  //  2, ->  0,
+  //  0,     2,
+  //  4],    4]
   for (let i = 0; i < column; i++) {
     lineFilledTiles = filledTiles
       .filter(function(item) {
         return item.column === i;
       })
       .reverse();
+
     let lineFilledTilesLength = lineFilledTiles.length;
     for (let j = 0; j < lineFilledTilesLength; j++) {
       grids[lineFilledTiles[j].row][lineFilledTiles[j].column] = 0;
-      grids[column - 1 - j][i] = lineFilledTiles[j].value;
+      // [3][0];
+      // [2][0];
+      grids[row - 1 - j][i] = lineFilledTiles[j].value;
     }
   }
-  LOG && window.console.log(state.grids, "grids");
   transferGridsToTiles(state, grids);
 };
 
@@ -201,7 +207,6 @@ export const tilesSlideLeft = (state) => {
     });
     // {row: 0, column: 1, value: 2}
     // {row: 0, column: 3, value: 4}
-    LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
     let lineFilledTilesLength = lineFilledTiles.length;
     for (let j = 0; j < lineFilledTilesLength; j++) {
       // [0, 0, 0, 0];
@@ -256,8 +261,8 @@ export const mergeCollidedTilesForUpMove = (state) => {
   state.isCollided = false;
   const [row, column] = state.boardSize;
   let grids = state.grids;
-  for (let i = 0; i < row; i++) {
-    top: for (let j = 0; j < column - 1; j++) {
+  for (let i = 0; i < column; i++) {
+    top: for (let j = 0; j < row - 1; j++) {
       // if a tile is not zero and it is the same as the down neighbor, this tile multiple 2
       // increase current score here
       // the right neighbor becomes zero then
@@ -265,6 +270,10 @@ export const mergeCollidedTilesForUpMove = (state) => {
       //  2,  ->  0,
       //  4,      4,
       //  0]      0]
+      // [0][0]
+      // [1][0]
+      LOG && window.console.log(grids[j][i], j, i, "grid");
+      LOG && window.console.log(grids[j + 1][i], j, i, "grid");
       if (grids[j][i] > 0 && grids[j][i] === grids[j + 1][i]) {
         state.isCollided = true;
         grids[j][i] *= 2;
@@ -281,6 +290,7 @@ export const mergeCollidedTilesForDownMove = (state) => {
   state.isCollided = false;
   const [row, column] = state.boardSize;
   let grids = state.grids;
+  LOG && window.console.log(grids, "grid");
   for (let i = 0; i < column; i++) {
     top: for (let j = row - 1; j > 0; j--) {
       // if a tile is not zero and it is the same as the up neighbor, this tile multiple 2
@@ -293,7 +303,9 @@ export const mergeCollidedTilesForDownMove = (state) => {
       // [3][0]
       // [2][0]
       // [1][0]
-      LOG && window.console.log(grids[j][i], "grid");
+      // LOG && window.console.log(j, i, "grid");
+      LOG && window.console.log(grids[j][i], j, i, "grid");
+      LOG && window.console.log(grids[j - 1][i], j, i, "grid");
       if (grids[j][i] > 0 && grids[j][i] === grids[j - 1][i]) {
         state.isCollided = true;
         grids[j][i] *= 2;

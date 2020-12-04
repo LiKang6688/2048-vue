@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-for="(row, rowIndex) in boardSize[0]" :key="rowIndex">
+    <div v-for="(row, rowIndex) in row" :key="rowIndex">
       <tile
-        v-for="(column, columnIndex) in boardSize[1]"
+        v-for="(column, columnIndex) in column"
         :key="columnIndex"
         :data="{ row: row - 1, column: column - 1 }"
       />
@@ -19,8 +19,11 @@ export default {
     Tile,
   },
   computed: {
-    boardSize() {
-      return this.$store.state.boardSize;
+    row() {
+      return this.$store.getters.row;
+    },
+    column() {
+      return this.$store.getters.column;
     },
   },
 };

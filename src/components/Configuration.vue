@@ -45,29 +45,46 @@
 <script>
 export default {
   name: "Configuration",
-  computed: {
-    row() {
-      return this.$store.getters.row;
-    },
-    column() {
-      return this.$store.getters.column;
-    },
-    goal() {
-      return this.$store.getters.goal;
+  props: {
+    initalTiles: {
+      type: Number,
+      required: true,
     },
   },
+  data: () => ({
+    row: null,
+    column: null,
+    goal: null,
+  }),
+  created() {
+    this.row = this.$store.getters.row;
+    this.column = this.$store.getters.column;
+    this.goal = this.$store.getters.goal;
+  },
   methods: {
+    restartGame() {
+      this.$store.dispatch("RestartGame");
+      for (let index = 0; index < this.initalTiles; index++)
+        this.$store.dispatch("GenerateOneRandomTile");
+      this.$store.commit("addSteps");
+    },
     onChangeRow(event) {
-      const row = event.target.value;
-      this.commit("setRow", row);
+      const row = parseInt(event.target.value);
+      window.console.log(row);
+      this.$store.commit("setRow", row);
+      this.restartGame();
     },
     onChangeColumn(event) {
-      const column = event.target.value;
-      this.commit("setColumn", column);
+      const column = parseInt(event.target.value);
+      window.console.log(column);
+      this.$store.commit("setColumn", column);
+      this.restartGame();
     },
     onChangeGoal(event) {
-      const goal = event.target.value;
-      this.commit("setWinValue", goal);
+      const goal = parseInt(event.target.value);
+      window.console.log(goal);
+      this.$store.commit("setWinValue", goal);
+      this.restartGame();
     },
   },
 };

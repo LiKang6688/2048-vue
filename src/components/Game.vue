@@ -1,6 +1,6 @@
 <template>
   <div ref="game">
-    <board />
+    <board class="board" />
     <tile
       class="tile-item"
       v-for="(tile, index) in tiles"
