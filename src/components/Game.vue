@@ -49,12 +49,14 @@ export default {
   },
   created() {
     if (this.tiles.length === 0) {
-      this.$store.dispatch("RestartGame");
-      // Every turn, two new tiles randomly appear in an empty spot on the board
-      // with a value of either 2 or 4.
-      for (let index = 0; index < this.initalTiles; index++)
-        this.$store.dispatch("GenerateOneRandomTile");
-      this.$store.commit("addSteps");
+      this.$store.dispatch("RestartGame").then(() => {
+        // Every turn, two new tiles randomly appear in an empty spot on the board
+        // with a value of either 2 or 4.
+        for (let index = 0; index < this.initalTiles; index++) {
+          this.$store.dispatch("GenerateOneRandomTile");
+          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+        }
+      });
     }
   },
   mounted() {
@@ -184,36 +186,40 @@ export default {
         case "ArrowUp": {
           LOG && window.console.log("ArrowUp");
           if (this.canTilesSlideUp()) {
-            this.$store.dispatch("TilesSlideUp");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideUp").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
         case "ArrowDown": {
           LOG && window.console.log("ArrowDown");
           if (this.canTilesSlideDown()) {
-            this.$store.dispatch("TilesSlideDown");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideDown").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
         case "ArrowLeft": {
           LOG && window.console.log("ArrowLeft");
           if (this.canTilesSlideLeft()) {
-            this.$store.dispatch("TilesSlideLeft");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideLeft").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }
         case "ArrowRight": {
           LOG && window.console.log("ArrowRight");
           if (this.canTilesSlideRight()) {
-            this.$store.dispatch("TilesSlideRight");
-            this.generateOneRandomTile();
-            this.$store.commit("addSteps");
+            this.$store.dispatch("TilesSlideRight").then(() => {
+              this.generateOneRandomTile();
+              this.$store.commit("addSteps");
+            });
           }
           break;
         }

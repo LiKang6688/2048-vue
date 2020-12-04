@@ -25,11 +25,12 @@ export default {
   methods: {
     tryAgain() {
       this.$emit("add-key-swipe");
-      this.$store.dispatch("RestartGame");
-      for (let index = 0; index < this.initalTiles; index++) {
-        this.$store.dispatch("GenerateOneRandomTile");
-        if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
-      }
+      this.$store.dispatch("RestartGame").then(() => {
+        for (let index = 0; index < this.initalTiles; index++) {
+          this.$store.dispatch("GenerateOneRandomTile");
+          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+        }
+      });
     },
     // After reaching the 2048 tile,
     // players can continue to play (beyond the 2048 tile) to reach higher scores.
