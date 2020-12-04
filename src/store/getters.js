@@ -10,6 +10,10 @@ export const goal = (state) => {
   return state.winValue;
 };
 
+export const maxUndoSteps = (state) => {
+  return state.maxUndoSteps;
+};
+
 export const stepsLength = (state) => {
-  return state.steps.length - 1;
+  return state.undoSteps.length - 1;
 };

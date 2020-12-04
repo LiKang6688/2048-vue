@@ -90,8 +90,8 @@ export default {
       // LOG && window.console.log(this.grids, "grids");
       for (let i = 0; i < column; i++) {
         for (let j = 0; j < row - 1; j++) {
-          LOG && window.console.log(this.grids[j][i], j, i, "grid");
-          LOG && window.console.log(this.grids[j + 1][i], j, i, "grid");
+          // LOG && window.console.log(this.grids[j][i], j, i, "grid");
+          // LOG && window.console.log(this.grids[j + 1][i], j, i, "grid");
           //The tile item itself is not 0, it is the same as its down neighbor
           // [0][0]
           // [1][0]
@@ -109,8 +109,8 @@ export default {
       // LOG && window.console.log(this.grids, "grids");
       for (let i = 0; i < column; i++) {
         for (let j = 0; j < row - 1; j++) {
-          LOG && window.console.log(this.grids[j + 1][i], j, i, "grid");
-          LOG && window.console.log(this.grids[j][i], j, i, "grid");
+          // LOG && window.console.log(this.grids[j + 1][i], j, i, "grid");
+          // LOG && window.console.log(this.grids[j][i], j, i, "grid");
           //The tile item itself is not 0, it is the same as its up neighbor
           if (
             this.grids[j + 1][i] > 0 &&
@@ -129,8 +129,8 @@ export default {
       // LOG && window.console.log(this.grids, "grids");
       for (let i = 0; i < row; i++) {
         for (let j = 0; j < column - 1; j++) {
-          LOG && window.console.log(this.grids[i][j + 1], i, j, "grid");
-          LOG && window.console.log(this.grids[i][j], i, j, "grid");
+          // LOG && window.console.log(this.grids[i][j + 1], i, j, "grid");
+          // LOG && window.console.log(this.grids[i][j], i, j, "grid");
           // The tile item itself is 0, its right neighbor is not 0
           if (this.grids[i][j] === 0 && this.grids[i][j + 1] > 0) return true;
 
@@ -146,8 +146,8 @@ export default {
       LOG && window.console.log(this.grids, "grids");
       for (let i = 0; i < row; i++) {
         for (let j = 0; j < column - 1; j++) {
-          LOG && window.console.log(this.grids[i][j], i, j, "grid");
-          LOG && window.console.log(this.grids[i][j + 1], i, j, "grid");
+          // LOG && window.console.log(this.grids[i][j], i, j, "grid");
+          // LOG && window.console.log(this.grids[i][j + 1], i, j, "grid");
           // The tile item itself is 0, its left neighbor is not 0
           if (this.grids[i][j + 1] === 0 && this.grids[i][j] > 0) return true;
 

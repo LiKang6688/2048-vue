@@ -39,6 +39,18 @@
         </select>
       </div>
     </div>
+    <div>
+      <label for="standard-select">Undo Steps</label>
+      <div>
+        <select v-model="maxUndoSteps" @change="onChangeUndoSteps($event)">
+          <option disabled value="">Please select undo steps</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -60,6 +72,7 @@ export default {
     this.row = this.$store.getters.row;
     this.column = this.$store.getters.column;
     this.goal = this.$store.getters.goal;
+    this.maxUndoSteps = this.$store.getters.maxUndoSteps;
   },
   methods: {
     restartGame() {
@@ -84,6 +97,12 @@ export default {
       const goal = parseInt(event.target.value);
       window.console.log(goal);
       this.$store.commit("setWinValue", goal);
+      this.restartGame();
+    },
+    onChangeUndoSteps(event) {
+      const undoSteps = parseInt(event.target.value);
+      window.console.log(undoSteps);
+      this.$store.commit("setMaxUndoSteps", undoSteps);
       this.restartGame();
     },
   },
