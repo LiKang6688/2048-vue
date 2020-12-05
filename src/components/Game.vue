@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { addSwipeListenner, removeSwipeListenner } from "../utils/swipe.js";
+import { addSwipeListenner } from "../utils/swipe.js";
 import Board from "./Board.vue";
 import Tile from "./Tile.vue";
 const LOG = window._env_.LOG;
@@ -67,8 +67,10 @@ export default {
   },
   methods: {
     addKeyAndSwipe() {
+      //add keydown event
       document.addEventListener("keydown", this.onKeyDown);
       // LOG && window.console.log(this.$refs.game);
+      // add touch event
       addSwipeListenner(this.$refs.game, this.move);
     },
     onKeyDown(evt) {
@@ -229,7 +231,7 @@ export default {
 
       if (this.isGameOver()) {
         document.removeEventListener("keydown", this.onKeyDown);
-        removeSwipeListenner(this.$refs.game, this.move);
+        // removeSwipeListenner(this.$refs.game, this.move);
         this.$store.commit("setStatus", {
           gameEnd: true,
           win: false,
@@ -240,7 +242,7 @@ export default {
 
       if (this.isWin()) {
         document.removeEventListener("keydown", this.onKeyDown);
-        removeSwipeListenner(this.$refs.game, this.move);
+        // removeSwipeListenner(this.$refs.game, this.move);
         this.$store.commit("setStatus", {
           gameEnd: true,
           win: true,
