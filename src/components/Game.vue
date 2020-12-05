@@ -227,13 +227,17 @@ export default {
           LOG && window.console.log("Something went wrong!");
       }
 
-      if (this.isGameOver())
+      if (this.isGameOver()) {
+        document.removeEventListener("keydown", this.onKeyDown);
+        removeSwipeListenner(this.$refs.game);
         this.$store.commit("setStatus", {
           gameEnd: true,
           win: false,
           gameOver: true,
           keepGoing: false,
         });
+      }
+
       if (this.isWin()) {
         document.removeEventListener("keydown", this.onKeyDown);
         removeSwipeListenner(this.$refs.game);
