@@ -5,13 +5,13 @@
       class="tile-item"
       v-for="(tile, index) in tiles"
       :key="index"
-      :tile="tile"
+      :data="tile"
     />
   </div>
 </template>
 
 <script>
-import { addSwipeListenner } from "../utils/swipe.js";
+import addSwipeListenner from "../utils/swipe.js";
 import Board from "./Board.vue";
 import Tile from "./Tile.vue";
 const LOG = window._env_.LOG;

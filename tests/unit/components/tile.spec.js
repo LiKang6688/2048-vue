@@ -1,31 +1,49 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { should } from "chai";
+import { should, expect } from "chai";
 import { shallowMount } from "@vue/test-utils";
 import Tile from "@/components/Tile.vue";
-import Store from "@/store";
+import store from "@/store";
 
 Vue.use(Vuex);
-const store = new Vuex.Store(Store);
 
 describe("Tile.vue", () => {
   before(() => {
     should();
   });
 
-  // describe("Store", () => {
-  //   it("store is loaded", () => {
-  //     const wrapper = shallowMount(Tile, { store });
-
-  //   });
-  // });
-
   it("renders props.tile when passed", () => {
-    const tile = { row: 0, column: 0, value: 2 };
+    const data = { row: 0, column: 0, value: 2 };
     const wrapper = shallowMount(Tile, {
-      propsData: { tile },
+      propsData: { data },
       store,
     });
-    wrapper.text().should.to.include(tile);
+
+    wrapper.text().should.to.include(data.value);
+  });
+
+  describe("computed", () => {
+    describe("tileClass", () => {
+      it("should return tile-2 if tile.value is 2", () => {
+        const localThis = {
+          data: { row: 0, column: 0, value: 2 },
+        };
+
+        expect(Tile.computed.tileClass.call(localThis)).to.equal("tile-2");
+      });
+    });
+
+    describe("tileStyle", () => {
+      it("should return tile-2 if tile.value is 2", () => {
+        const localThis = {
+          data: { row: 0, column: 0, value: 2 },
+          $store: store,
+        };
+
+        expect(Tile.computed.tileStyle.call(localThis)["transform"]).to.equal(
+          "translate3d(0%,0%,0)"
+        );
+      });
+    });
   });
 });

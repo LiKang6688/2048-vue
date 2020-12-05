@@ -1,8 +1,8 @@
-// const LOG = window._env_.LOG;
+const LOG = window._env_.LOG;
 
-export const RestartGame = ({ commit }) => {
+export const RestartGame = ({ commit, state }) => {
   return new Promise((resolve) => {
-    commit("initGrids");
+    commit("initGrids", state.boardSize);
     commit("setCurrentScore", 0);
     commit("setTiles", []);
     commit("setStatus", {
@@ -22,7 +22,7 @@ export const GenerateOneRandomTile = ({ commit, state }) => {
     return Math.round(Math.random()) * 2 + 2;
   };
   const randomTile = (emptySpots) => {
-    // LOG && window.console.log(emptySpots, "emptySpots");
+    LOG && window.console.log(emptySpots, "emptySpots");
     if (emptySpots.length > 0) {
       const randomTile =
         emptySpots[Math.floor(Math.random() * emptySpots.length)];

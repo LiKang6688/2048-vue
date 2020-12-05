@@ -1,20 +1,20 @@
-// const LOG = window._env_.LOG;
+const LOG = window._env_.LOG;
 
 export const initialiseState = (state, playload) => {
   Object.assign(state, playload);
 };
 
-export const initGrids = (state) => {
-  const [row, column] = state.boardSize;
+export const initGrids = (state, value) => {
+  const [row, column] = value;
   state.grids = Array(row)
     .fill()
     .map(() => Array(column).fill(0));
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
 };
 
 export const occupyGrid = (state, { randomTile, randomValue }) => {
   state.grids[randomTile.x][randomTile.y] = randomValue;
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
 };
 
 export const setCurrentScore = (state, value) => {
@@ -54,17 +54,17 @@ export const addNewTile = (state, { randomTile, randomValue }) => {
     column: randomTile.y,
     value: randomValue,
   });
-  // LOG && window.console.log(state.tiles, "tiles");
+  LOG && window.console.log(state.tiles, "tiles");
 };
 
-export const setUndoSteps = (state) => {
-  state.undoSteps = [];
+export const setUndoSteps = (state, value) => {
+  state.undoSteps = value;
 };
 
 export const addSteps = (state) => {
   let clonedState = JSON.parse(JSON.stringify(state));
-  // LOG && window.console.log(clonedState, "clonedState");
-  // LOG && window.console.log(state.undoSteps, "undoSteps");
+  LOG && window.console.log(clonedState, "clonedState");
+  LOG && window.console.log(state.undoSteps, "undoSteps");
   state.undoSteps.push({
     tiles: clonedState.tiles,
     grids: clonedState.grids,
@@ -72,13 +72,13 @@ export const addSteps = (state) => {
     isCollided: clonedState.isCollided,
     status: clonedState.status,
   });
-  // LOG && window.console.log(state.undoSteps, "undoSteps");
+  LOG && window.console.log(state.undoSteps, "undoSteps");
   if (state.undoSteps.length - 1 > state.maxUndoSteps) state.undoSteps.shift();
 };
 
 export const undo = (state) => {
   state.undoSteps.splice(-1, 1);
-  // LOG && window.console.log(state.undoSteps, "step");
+  LOG && window.console.log(state.undoSteps, "step");
   const step = JSON.parse(
     JSON.stringify(state.undoSteps[state.undoSteps.length - 1])
   );
@@ -87,7 +87,7 @@ export const undo = (state) => {
   state.stats = step.stats;
   state.isCollided = step.isCollided;
   state.status = step.status;
-  // LOG && window.console.log(state, "state");
+  LOG && window.console.log(state, "state");
 };
 
 // The user's score starts at zero,
@@ -100,7 +100,6 @@ const increaseScore = (state, value) => {
 
 // get all TileItems which are not zero
 const getFilledTiles = (state) => {
-  // LOG && window.console.log(state, "state");
   const [row, column] = state.boardSize;
   const grids = state.grids;
   let filledTiles = [];
@@ -132,12 +131,12 @@ const transferGridsToTiles = (state, value) => {
     }
   }
   state.tiles = tiles;
-  // LOG && window.console.log(state.tiles, "tiles");
+  LOG && window.console.log(state.tiles, "tiles");
 };
 
 export const tilesSlideUp = (state) => {
   const filledTiles = getFilledTiles(state);
-  // LOG && window.console.log(filledTiles, "filledTiles");
+  LOG && window.console.log(filledTiles, "filledTiles");
   const [, column] = state.boardSize;
   let grids = state.grids;
   let lineFilledTiles = [];
@@ -169,7 +168,7 @@ export const tilesSlideUp = (state) => {
       grids[j][i] = lineFilledTiles[j].value;
     }
   }
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
   transferGridsToTiles(state, grids);
 };
 
@@ -197,6 +196,7 @@ export const tilesSlideDown = (state) => {
       grids[row - 1 - j][i] = lineFilledTiles[j].value;
     }
   }
+  LOG && window.console.log(state.grids, "grids");
   transferGridsToTiles(state, grids);
 };
 
@@ -221,7 +221,7 @@ export const tilesSlideLeft = (state) => {
       grids[i][j] = lineFilledTiles[j].value;
     }
   }
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
   transferGridsToTiles(state, grids);
 };
 
@@ -249,7 +249,7 @@ export const tilesSlideRight = (state) => {
       grids[i][column - 1 - j] = lineFilledTiles[j].value;
     }
   }
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
   transferGridsToTiles(state, grids);
 };
 
@@ -289,7 +289,7 @@ export const mergeCollidedTilesForUpMove = (state) => {
       }
     }
   }
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
 };
 
 export const mergeCollidedTilesForDownMove = (state) => {
@@ -321,7 +321,7 @@ export const mergeCollidedTilesForDownMove = (state) => {
       }
     }
   }
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
 };
 
 export const mergeCollidedTilesForLeftMove = (state) => {
@@ -342,7 +342,7 @@ export const mergeCollidedTilesForLeftMove = (state) => {
         break top;
       }
     }
-    // LOG && window.console.log(state.grids, "grids");
+    LOG && window.console.log(state.grids, "grids");
   }
 };
 
@@ -367,6 +367,6 @@ export const mergeCollidedTilesForRightMove = (state) => {
         break top;
       }
     }
-    // LOG && window.console.log(state.grids, "grids");
+    LOG && window.console.log(state.grids, "grids");
   }
 };

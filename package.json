@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit tests/unit/**/*.spec.js",
+    "test:unit": "vue-cli-service test:unit tests/unit/**/*.spec.js --require tests/unit/setup.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
