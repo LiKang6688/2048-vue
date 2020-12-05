@@ -76,31 +76,3 @@ export function addSwipeListenner(el, callback) {
     false
   );
 }
-
-export function removeSwipeListenner(el, callback) {
-  touchsurface = el;
-
-  touchsurface.removeEventListener(
-    "touchstart",
-    (event) => {
-      listenerTouchStart(event);
-    },
-    false
-  );
-
-  touchsurface.removeEventListener(
-    "touchmove",
-    (event) => {
-      listenerTouchMove(event);
-    },
-    false
-  );
-
-  touchsurface.removeEventListener(
-    "touchend",
-    (event) => {
-      listenerTouchEnd(event, callback);
-    },
-    false
-  );
-}
