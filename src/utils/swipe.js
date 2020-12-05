@@ -5,24 +5,22 @@ const SWIPE_MAP = {
   LEFT: "ArrowLeft",
 };
 
-export function removeSwipeListenner(el) {
+export function removeSwipeListenner(el, callback) {
   let touchsurface = el,
     listenerTouchStart = (event) => {
       event.preventDefault();
     },
-    listenerTouchEnd = (event) => {
-      event.preventDefault();
-    },
-    listenerTouchCancel = (event) => {
-      event.preventDefault();
-    },
     listenerTouchMove = (event) => {
       event.preventDefault();
+    },
+    listenerTouchEnd = (event) => {
+      callback();
+      event.preventDefault();
     };
+
   touchsurface.removeEventListener("touchstart", listenerTouchStart, false);
-  touchsurface.removeEventListener("touchend", listenerTouchEnd, false);
-  touchsurface.removeEventListener("touchcancel", listenerTouchCancel, false);
   touchsurface.removeEventListener("touchmove", listenerTouchMove, false);
+  touchsurface.removeEventListener("touchend", listenerTouchEnd, false);
 }
 
 export function addSwipeListenner(el, callback) {
