@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { addSwipeListenner } from "../utils/swipe.js";
+import addSwipeListenner from "../utils/swipe.js";
 import Board from "./Board.vue";
 import Tile from "./Tile.vue";
 const LOG = window._env_.LOG;
