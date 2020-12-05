@@ -49,7 +49,7 @@ const listenerTouchEnd = (event, callback) => {
   event.preventDefault();
 };
 
-export function addSwipeListenner(el, callback) {
+export default addSwipeListenner = (el, callback) => {
   touchsurface = el;
 
   touchsurface.addEventListener(
@@ -75,4 +75,4 @@ export function addSwipeListenner(el, callback) {
     },
     false
   );
-}
+};
