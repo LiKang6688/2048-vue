@@ -5,7 +5,7 @@
       class="tile-item"
       v-for="(tile, index) in tiles"
       :key="index"
-      :data="tile"
+      :tile="tile"
     />
   </div>
 </template>

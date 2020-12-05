@@ -1,4 +1,4 @@
-const LOG = window._env_.LOG;
+// const LOG = window._env_.LOG;
 
 export const RestartGame = ({ commit }) => {
   return new Promise((resolve) => {
@@ -22,7 +22,7 @@ export const GenerateOneRandomTile = ({ commit, state }) => {
     return Math.round(Math.random()) * 2 + 2;
   };
   const randomTile = (emptySpots) => {
-    LOG && window.console.log(emptySpots, "emptySpots");
+    // LOG && window.console.log(emptySpots, "emptySpots");
     if (emptySpots.length > 0) {
       const randomTile =
         emptySpots[Math.floor(Math.random() * emptySpots.length)];
