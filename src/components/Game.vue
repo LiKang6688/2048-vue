@@ -231,7 +231,6 @@ export default {
 
       if (this.isGameOver()) {
         document.removeEventListener("keydown", this.onKeyDown);
-        // removeSwipeListenner(this.$refs.game, this.move);
         this.$store.commit("setStatus", {
           gameEnd: true,
           win: false,
@@ -242,7 +241,6 @@ export default {
 
       if (this.isWin()) {
         document.removeEventListener("keydown", this.onKeyDown);
-        // removeSwipeListenner(this.$refs.game, this.move);
         this.$store.commit("setStatus", {
           gameEnd: true,
           win: true,
