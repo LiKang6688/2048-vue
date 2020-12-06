@@ -1,6 +1,10 @@
 <template>
   <div>
-    <game-end class="game-end" :initalTiles="initalTiles" />
+    <game-end
+      class="game-end"
+      :initalTiles="initalTiles"
+      @add-key-swipe="addKeyAndSwipe"
+    />
     <game
       ref="game"
       class="game-board"
@@ -36,6 +40,11 @@ export default {
         width: this.width - 20 + "px",
         height: this.width - 20 + "px",
       };
+    },
+  },
+  methods: {
+    addKeyAndSwipe() {
+      this.$refs.game.addKeyAndSwipe();
     },
   },
 };
