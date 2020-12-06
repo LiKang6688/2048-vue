@@ -22,8 +22,6 @@ export default {
       required: true,
     },
   },
-  data: () => ({}),
-  // mounted() {},
   computed: {
     tileClass() {
       const { value } = this.data;

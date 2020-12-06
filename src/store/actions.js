@@ -1,8 +1,8 @@
 const LOG = window._env_.LOG;
 
-export const RestartGame = ({ commit }) => {
+export const RestartGame = ({ commit, state }) => {
   return new Promise((resolve) => {
-    commit("initGrids");
+    commit("initGrids", state.boardSize);
     commit("setCurrentScore", 0);
     commit("setTiles", []);
     commit("setStatus", {
