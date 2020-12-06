@@ -4,12 +4,12 @@ export const initialiseState = (state, playload) => {
   Object.assign(state, playload);
 };
 
-export const initGrids = (state) => {
-  const [row, column] = state.boardSize;
+export const initGrids = (state, value) => {
+  const [row, column] = value;
   state.grids = Array(row)
     .fill()
     .map(() => Array(column).fill(0));
-  // LOG && window.console.log(state.grids, "grids");
+  LOG && window.console.log(state.grids, "grids");
 };
 
 export const occupyGrid = (state, { randomTile, randomValue }) => {
@@ -57,8 +57,8 @@ export const addNewTile = (state, { randomTile, randomValue }) => {
   LOG && window.console.log(state.tiles, "tiles");
 };
 
-export const setUndoSteps = (state) => {
-  state.undoSteps = [];
+export const setUndoSteps = (state, value) => {
+  state.undoSteps = value;
 };
 
 export const addSteps = (state) => {
@@ -100,7 +100,6 @@ const increaseScore = (state, value) => {
 
 // get all TileItems which are not zero
 const getFilledTiles = (state) => {
-  LOG && window.console.log(state, "state");
   const [row, column] = state.boardSize;
   const grids = state.grids;
   let filledTiles = [];
@@ -137,7 +136,7 @@ const transferGridsToTiles = (state, value) => {
 
 export const tilesSlideUp = (state) => {
   const filledTiles = getFilledTiles(state);
-  // LOG && window.console.log(filledTiles, "filledTiles");
+  LOG && window.console.log(filledTiles, "filledTiles");
   const [, column] = state.boardSize;
   let grids = state.grids;
   let lineFilledTiles = [];
@@ -153,7 +152,7 @@ export const tilesSlideUp = (state) => {
     });
     // {row: 1, column: 0, value: 2}
     // {row: 3, column: 0, value: 4}
-    LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
+    // LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
     let lineFilledTilesLength = lineFilledTiles.length;
     for (let j = 0; j < lineFilledTilesLength; j++) {
       // [0,
@@ -197,6 +196,7 @@ export const tilesSlideDown = (state) => {
       grids[row - 1 - j][i] = lineFilledTiles[j].value;
     }
   }
+  LOG && window.console.log(state.grids, "grids");
   transferGridsToTiles(state, grids);
 };
 
@@ -240,7 +240,7 @@ export const tilesSlideRight = (state) => {
       .reverse();
     // {row: 0, column: 3, value: 4}
     // {row: 0, column: 1, value: 2}
-    LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
+    // LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
     let lineFilledTilesLength = lineFilledTiles.length;
     for (let j = 0; j < lineFilledTilesLength; j++) {
       // [0, 0, 0, 0];
@@ -278,8 +278,8 @@ export const mergeCollidedTilesForUpMove = (state) => {
       //  0]      0]
       // [0][0]
       // [1][0]
-      LOG && window.console.log(grids[j][i], j, i, "grid");
-      LOG && window.console.log(grids[j + 1][i], j, i, "grid");
+      // LOG && window.console.log(grids[j][i], j, i, "grid");
+      // LOG && window.console.log(grids[j + 1][i], j, i, "grid");
       if (grids[j][i] > 0 && grids[j][i] === grids[j + 1][i]) {
         state.isCollided = true;
         grids[j][i] *= 2;
@@ -296,7 +296,7 @@ export const mergeCollidedTilesForDownMove = (state) => {
   state.isCollided = false;
   const [row, column] = state.boardSize;
   let grids = state.grids;
-  LOG && window.console.log(grids, "grid");
+  // LOG && window.console.log(grids, "grid");
   for (let i = 0; i < column; i++) {
     top: for (let j = row - 1; j > 0; j--) {
       // if a tile is not zero and it is the same as the up neighbor, this tile multiple 2
@@ -310,8 +310,8 @@ export const mergeCollidedTilesForDownMove = (state) => {
       // [2][0]
       // [1][0]
       // LOG && window.console.log(j, i, "grid");
-      LOG && window.console.log(grids[j][i], j, i, "grid");
-      LOG && window.console.log(grids[j - 1][i], j, i, "grid");
+      // LOG && window.console.log(grids[j][i], j, i, "grid");
+      // LOG && window.console.log(grids[j - 1][i], j, i, "grid");
       if (grids[j][i] > 0 && grids[j][i] === grids[j - 1][i]) {
         state.isCollided = true;
         grids[j][i] *= 2;
