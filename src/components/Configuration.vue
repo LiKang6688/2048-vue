@@ -1,62 +1,48 @@
 <template>
   <div>
-    <div>
-      <label for="standard-select">Row</label>
-      <div>
-        <select v-model="row" @change="onChangeRow($event)">
-          <option disabled value="">Please select row amount</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-        </select>
-      </div>
-    </div>
-    <div>
-      <label for="standard-select">Column</label>
-      <div>
-        <select v-model="column" @change="onChangeColumn($event)">
-          <option disabled value="">Please select column amount</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-        </select>
-      </div>
-    </div>
-    <div>
-      <label for="standard-select">Goal</label>
-      <div>
-        <select v-model="goal" @change="onChangeGoal($event)">
-          <option disabled value="">Please select Goal</option>
-          <option>64</option>
-          <option>128</option>
-          <option>256</option>
-          <option>512</option>
-          <option>1024</option>
-          <option>2048</option>
-          <option>4096</option>
-        </select>
-      </div>
-    </div>
-    <div>
-      <label for="standard-select">Undo Steps</label>
-      <div>
-        <select v-model="maxUndoSteps" @change="onChangeUndoSteps($event)">
-          <option disabled value="">Please select undo steps</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-        </select>
-      </div>
-    </div>
+    <select-box
+      :value="row"
+      label="Row"
+      info="Please select row amount"
+      :minValue="3"
+      :maxValue="6"
+      :onChange="onChangeRow"
+    />
+    <select-box
+      :value="column"
+      label="Column"
+      info="Please select column amount"
+      :minValue="3"
+      :maxValue="6"
+      :onChange="onChangeColumn"
+    />
+    <select-box
+      :value="goal"
+      label="Goal"
+      info="Please select goal"
+      :minValue="3"
+      :maxValue="12"
+      :onChange="onChangeGoal"
+    />
+    <select-box
+      :value="maxUndoSteps"
+      label="Undo Steps"
+      info="Please select undo steps amount"
+      :minValue="1"
+      :maxValue="4"
+      :onChange="onChangeUndoSteps"
+    />
   </div>
 </template>
 
 <script>
+import SelectBox from "./SelectBox.vue";
+
 export default {
   name: "Configuration",
+  components: {
+    SelectBox,
+  },
   props: {
     initalTiles: {
       type: Number,
