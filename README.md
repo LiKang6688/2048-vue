@@ -1,35 +1,51 @@
 # 2048-vue
 
+### About
+
+a clone of 2048 game
+
+### Technology stack
+
+- Vue 2
+- Vuex
+- Vanilla JavaScript
+
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
 ### Run test
+
 ```
 npm run test:unit
 ```
 
-***
 
 ### Features
 
-- a simple 4x4 grid that is randomly populated with two tiles
+- A board that is randomly populated with two tiles
+
+- The game can be stored across browser sessions
 
 - Move the tiles when user presses arrow keys
 
@@ -41,7 +57,20 @@ npm run test:unit
 
 - Display a message when the game is ‘won’ or 'game over'
 
-~~~ 
+- The number of row and column, the goal, and the amout of undo can be configured
+
+- The current score and best score
+
+- Restart the game and undo
+
+
+### TODO
+- [ ] More Tests
+- [ ] Offline play
+
+
+
+```
  tiles: [
    { row: 0, column: 0, value: 2 },
    { row: 0, column: 1, value: 4 },
@@ -58,7 +87,7 @@ npm run test:unit
    { row: 3, column: 0, value: 8192 },
    { row: 3, column: 1, value: 16384 },
    { row: 3, column: 2, value: 32768 },
-   { row: 3, column: 3, value: 65536 }, 
+   { row: 3, column: 3, value: 65536 },
  ],
 
 
@@ -68,4 +97,4 @@ npm run test:unit
    [512, 1024, 2048, 4096],
    [8192, 16384, 32768, 65536],
  ],
- ~~~ 
+```
