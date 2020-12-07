@@ -5,7 +5,6 @@ import store from "./store";
 Vue.config.productionTip = false;
 
 const initialState = localStorage.getItem("state");
-window.console.log(initialState, "initialState");
 if (initialState) store.commit("initialiseState", JSON.parse(initialState));
 
 new Vue({

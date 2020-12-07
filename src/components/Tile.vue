@@ -1,9 +1,9 @@
 <template>
-  <div v-if="data.value">
+  <div v-if="tile.value">
     <div class="tile" :class="[tileClass]" :style="tileStyle">
       <transition appear name="appear">
         <div class="value">
-          {{ data.value }}
+          {{ tile.value }}
         </div>
       </transition>
     </div>
@@ -17,21 +17,19 @@
 export default {
   name: "Tile",
   props: {
-    data: {
+    tile: {
       type: Object,
       required: true,
     },
   },
-  data: () => ({}),
-  // mounted() {},
   computed: {
     tileClass() {
-      const { value } = this.data;
+      const { value } = this.tile;
       return "tile-" + (value > 16384 ? "higher" : value);
     },
     tileStyle() {
       const [rowSize, columSzie] = this.$store.state.boardSize;
-      const { row, column } = this.data;
+      const { row, column } = this.tile;
       return {
         width: 100 / columSzie + "%",
         height: 100 / rowSize + "%",

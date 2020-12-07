@@ -34,7 +34,12 @@ npm run build
 npm run lint
 ```
 
----
+### Run test
+
+```
+npm run test:unit
+```
+
 
 ### Features
 

@@ -3,7 +3,7 @@
     <div v-if="status.gameOver" class="text">Game over!</div>
     <div v-else-if="status.win" class="text">You win!</div>
     <div class="buttons">
-      <button @click="restart">Try again</button>
+      <button @click="tryAgain">Try again</button>
       <button v-if="status.win" @click="keepGoing">Keep going</button>
     </div>
   </div>
@@ -23,11 +23,15 @@ export default {
     },
   },
   methods: {
-    restart() {
+    tryAgain() {
       this.$emit("add-key-swipe");
-      this.$store.dispatch("RestartGame");
-      for (let index = 0; index < this.initalTiles; index++)
-        this.$store.dispatch("GenerateOneRandomTile");
+      this.$store.dispatch("RestartGame").then(() => {
+        for (let index = 0; index < this.initalTiles; index++) {
+          this.$store.dispatch("GenerateOneRandomTile");
+          if (index + 1 === this.initalTiles)
+            this.$store.commit("addUndoSteps");
+        }
+      });
     },
     // After reaching the 2048 tile,
     // players can continue to play (beyond the 2048 tile) to reach higher scores.
