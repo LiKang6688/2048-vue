@@ -4,7 +4,7 @@
       <tile
         v-for="(column, columnIndex) in column"
         :key="columnIndex"
-        :data="{ row: row - 1, column: column - 1 }"
+        :tile="{ row: row - 1, column: column - 1 }"
       />
     </div>
   </div>
