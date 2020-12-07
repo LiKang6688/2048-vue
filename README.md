@@ -43,7 +43,9 @@ npm run test:unit
 
 ### Features
 
-- a simple 4x4 grid that is randomly populated with two tiles
+- A board that is randomly populated with two tiles
+
+- The game can be stored across browser sessions
 
 - Move the tiles when user presses arrow keys
 
@@ -54,6 +56,19 @@ npm run test:unit
 - Touch/mobile support
 
 - Display a message when the game is ‘won’ or 'game over'
+
+- The number of row and column, the goal, and the amout of undo can be configured
+
+- The current score and best score
+
+- Restart the game and undo
+
+
+### TODO
+- [ ] More Tests
+- [ ] Offline play
+
+
 
 ```
  tiles: [
