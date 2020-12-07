@@ -23,7 +23,7 @@ const state = () => ({
   },
   undoSteps: [],
   maxUndoStepsAmount: 1,
-  winTileValue: 8,
+  winTileValue: 2048,
   boardSize: [4, 4], //row, column
 });
 

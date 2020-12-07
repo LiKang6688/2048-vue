@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     addKeyAndSwipe() {
-      this.$refs.game.addKeyAndSwipe();
+      this.$refs.game.addKeyboard();
     },
   },
 };

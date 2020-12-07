@@ -67,12 +67,15 @@ export default {
     document.removeEventListener("keydown", this.onKeyDown);
   },
   methods: {
+    addKeyboard() {
+      document.addEventListener("keydown", this.onKeyDown);
+    },
     addKeyAndSwipe() {
       // add keydown event
       document.addEventListener("keydown", this.onKeyDown);
-      // LOG && window.console.log(this.$refs.game);
       // add touch event
       addSwipeListenner(this.$refs.game, this.move);
+      // LOG && window.console.log(this.$refs.game);
     },
     onKeyDown(evt) {
       let keyCode = { 38: "↑", 40: "↓", 37: "←", 39: "→" };
