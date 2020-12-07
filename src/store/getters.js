@@ -7,13 +7,13 @@ export const column = (state) => {
 };
 
 export const goal = (state) => {
-  return state.winValue;
+  return state.winTileValue;
 };
 
-export const maxUndoSteps = (state) => {
-  return state.maxUndoSteps;
+export const maxUndoStepsAmount = (state) => {
+  return state.maxUndoStepsAmount;
 };
 
-export const stepsLength = (state) => {
+export const undoStepsLength = (state) => {
   return state.undoSteps.length - 1;
 };

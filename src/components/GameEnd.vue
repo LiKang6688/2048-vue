@@ -28,7 +28,8 @@ export default {
       this.$store.dispatch("RestartGame").then(() => {
         for (let index = 0; index < this.initalTiles; index++) {
           this.$store.dispatch("GenerateOneRandomTile");
-          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+          if (index + 1 === this.initalTiles)
+            this.$store.commit("addUndoSteps");
         }
       });
     },

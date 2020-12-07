@@ -1,8 +1,8 @@
 <template>
-  <div class="menus">
+  <div>
     <button @click="restart">Restart</button>
-    <button @click="undo" :disabled="stepsLength < 1">
-      Undo ({{ stepsLength }})
+    <button @click="undo" :disabled="undoStepsLength < 1">
+      Undo ({{ undoStepsLength }})
     </button>
   </div>
 </template>
@@ -17,8 +17,8 @@ export default {
     },
   },
   computed: {
-    stepsLength() {
-      return this.$store.getters.stepsLength;
+    undoStepsLength() {
+      return this.$store.getters.undoStepsLength;
     },
   },
   methods: {
@@ -26,7 +26,8 @@ export default {
       this.$store.dispatch("RestartGame").then(() => {
         for (let index = 0; index < this.initalTiles; index++) {
           this.$store.dispatch("GenerateOneRandomTile");
-          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+          if (index + 1 === this.initalTiles)
+            this.$store.commit("addUndoSteps");
         }
       });
     },

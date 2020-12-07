@@ -25,7 +25,7 @@
       :onChange="onChangeGoal"
     />
     <select-box
-      :value="maxUndoSteps"
+      :value="maxUndoStepsAmount"
       label="Undo Steps"
       info="Please select undo steps amount"
       :minValue="1"
@@ -37,6 +37,7 @@
 
 <script>
 import SelectBox from "./SelectBox.vue";
+const LOG = window._env_.LOG;
 
 export default {
   name: "Configuration",
@@ -58,39 +59,40 @@ export default {
     this.row = this.$store.getters.row;
     this.column = this.$store.getters.column;
     this.goal = this.$store.getters.goal;
-    this.maxUndoSteps = this.$store.getters.maxUndoSteps;
+    this.maxUndoStepsAmount = this.$store.getters.maxUndoStepsAmount;
   },
   methods: {
     restartGame() {
       this.$store.dispatch("RestartGame").then(() => {
         for (let index = 0; index < this.initalTiles; index++) {
           this.$store.dispatch("GenerateOneRandomTile");
-          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+          if (index + 1 === this.initalTiles)
+            this.$store.commit("addUndoSteps");
         }
       });
     },
     onChangeRow(event) {
       const row = parseInt(event.target.value);
-      window.console.log(row);
+      LOG && window.console.log(row);
       this.$store.commit("setRow", row);
       this.restartGame();
     },
     onChangeColumn(event) {
       const column = parseInt(event.target.value);
-      window.console.log(column);
+      LOG && window.console.log(column);
       this.$store.commit("setColumn", column);
       this.restartGame();
     },
     onChangeGoal(event) {
       const goal = parseInt(event.target.value);
-      window.console.log(goal);
+      LOG && window.console.log(goal);
       this.$store.commit("setWinValue", goal);
       this.restartGame();
     },
     onChangeUndoSteps(event) {
-      const undoSteps = parseInt(event.target.value);
-      window.console.log(undoSteps);
-      this.$store.commit("setMaxUndoSteps", undoSteps);
+      const maxUndoStepsAmount = parseInt(event.target.value);
+      LOG && window.console.log(maxUndoStepsAmount);
+      this.$store.commit("setMaxUndoSteps", maxUndoStepsAmount);
       this.restartGame();
     },
   },

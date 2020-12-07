@@ -5,7 +5,7 @@
       class="tile-item"
       v-for="(tile, index) in tiles"
       :key="index"
-      :data="tile"
+      :tile="tile"
     />
   </div>
 </template>
@@ -40,8 +40,8 @@ export default {
     isCollided() {
       return this.$store.state.isCollided;
     },
-    winValue() {
-      return this.$store.state.winValue;
+    winTileValue() {
+      return this.$store.state.winTileValue;
     },
     keepGoing() {
       return this.$store.state.status.keepGoing;
@@ -54,7 +54,8 @@ export default {
         // with a value of either 2 or 4.
         for (let index = 0; index < this.initalTiles; index++) {
           this.$store.dispatch("GenerateOneRandomTile");
-          if (index + 1 == this.initalTiles) this.$store.commit("addSteps");
+          if (index + 1 === this.initalTiles)
+            this.$store.commit("addUndoSteps");
         }
       });
     }
@@ -66,12 +67,15 @@ export default {
     document.removeEventListener("keydown", this.onKeyDown);
   },
   methods: {
-    addKeyAndSwipe() {
-      //add keydown event
+    addKeyboard() {
       document.addEventListener("keydown", this.onKeyDown);
-      // LOG && window.console.log(this.$refs.game);
+    },
+    addKeyAndSwipe() {
+      // add keydown event
+      document.addEventListener("keydown", this.onKeyDown);
       // add touch event
       addSwipeListenner(this.$refs.game, this.move);
+      // LOG && window.console.log(this.$refs.game);
     },
     onKeyDown(evt) {
       let keyCode = { 38: "↑", 40: "↓", 37: "←", 39: "→" };
@@ -89,6 +93,21 @@ export default {
         this.canTilesSlideRight()
       );
     },
+    // The game is won when a tile with a value of 2048 appears on the board,
+    isWin() {
+      if (!this.keepGoing) {
+        const [row, column] = this.boardSize;
+        let maxValue = 0;
+        for (let i = 0; i < row; i++) {
+          for (let j = 0; j < column; j++) {
+            if (maxValue < this.grids[i][j]) {
+              maxValue = this.grids[i][j];
+            }
+          }
+        }
+        return maxValue === this.winTileValue;
+      }
+    },
     canTilesSlideUp() {
       const [row, column] = this.boardSize;
       // LOG && window.console.log(this.grids, "grids");
@@ -96,13 +115,13 @@ export default {
         for (let j = 0; j < row - 1; j++) {
           // LOG && window.console.log(this.grids[j][i], j, i, "grid");
           // LOG && window.console.log(this.grids[j + 1][i], j, i, "grid");
-          //The tile item itself is not 0, it is the same as its down neighbor
+          // The tile itself is not 0, it is the same as its down neighbor
           // [0][0]
           // [1][0]
           if (this.grids[j][i] > 0 && this.grids[j][i] === this.grids[j + 1][i])
             return true;
 
-          // The tile item itself is 0, its down neighbor is not 0
+          // The tile itself is 0, its down neighbor is not 0
           if (this.grids[j][i] === 0 && this.grids[j + 1][i] > 0) return true;
         }
       }
@@ -115,14 +134,14 @@ export default {
         for (let j = 0; j < row - 1; j++) {
           // LOG && window.console.log(this.grids[j + 1][i], j, i, "grid");
           // LOG && window.console.log(this.grids[j][i], j, i, "grid");
-          //The tile item itself is not 0, it is the same as its up neighbor
+          // The tile itself is not 0, it is the same as its up neighbor
           if (
             this.grids[j + 1][i] > 0 &&
             this.grids[j + 1][i] === this.grids[j][i]
           )
             return true;
 
-          // The tile item itself is 0, its up neighbor is not 0
+          // The tile itself is 0, its up neighbor is not 0
           if (this.grids[j + 1][i] === 0 && this.grids[j][i] > 0) return true;
         }
       }
@@ -135,10 +154,10 @@ export default {
         for (let j = 0; j < column - 1; j++) {
           // LOG && window.console.log(this.grids[i][j + 1], i, j, "grid");
           // LOG && window.console.log(this.grids[i][j], i, j, "grid");
-          // The tile item itself is 0, its right neighbor is not 0
+          // The tile itself is 0, its right neighbor is not 0
           if (this.grids[i][j] === 0 && this.grids[i][j + 1] > 0) return true;
 
-          //The tile item itself is not 0, it is the same as its right neighbor
+          // The tile itself is not 0, it is the same as its right neighbor
           if (this.grids[i][j] > 0 && this.grids[i][j] === this.grids[i][j + 1])
             return true;
         }
@@ -152,10 +171,10 @@ export default {
         for (let j = 0; j < column - 1; j++) {
           // LOG && window.console.log(this.grids[i][j], i, j, "grid");
           // LOG && window.console.log(this.grids[i][j + 1], i, j, "grid");
-          // The tile item itself is 0, its left neighbor is not 0
+          // The tile itself is 0, its left neighbor is not 0
           if (this.grids[i][j + 1] === 0 && this.grids[i][j] > 0) return true;
 
-          //The tile item itself is not 0, it is the same as its left neighbor
+          // The tile itself is not 0, it is the same as its left neighbor
           if (
             this.grids[i][j + 1] > 0 &&
             this.grids[i][j + 1] === this.grids[i][j]
@@ -164,21 +183,6 @@ export default {
         }
       }
       return false;
-    },
-    // The game is won when a tile with a value of 2048 appears on the board,
-    isWin() {
-      if (!this.keepGoing) {
-        const [row, column] = this.boardSize;
-        let maxValue = 0;
-        for (let i = 0; i < row; i++) {
-          for (let j = 0; j < column; j++) {
-            if (maxValue < this.grids[i][j]) {
-              maxValue = this.grids[i][j];
-            }
-          }
-        }
-        return maxValue === this.winValue;
-      }
     },
     generateOneRandomTile() {
       if (!this.isCollided) this.$store.dispatch("GenerateOneRandomTile");
@@ -190,7 +194,7 @@ export default {
           if (this.canTilesSlideUp()) {
             this.$store.dispatch("TilesSlideUp").then(() => {
               this.generateOneRandomTile();
-              this.$store.commit("addSteps");
+              this.$store.commit("addUndoSteps");
             });
           }
           break;
@@ -200,7 +204,7 @@ export default {
           if (this.canTilesSlideDown()) {
             this.$store.dispatch("TilesSlideDown").then(() => {
               this.generateOneRandomTile();
-              this.$store.commit("addSteps");
+              this.$store.commit("addUndoSteps");
             });
           }
           break;
@@ -210,7 +214,7 @@ export default {
           if (this.canTilesSlideLeft()) {
             this.$store.dispatch("TilesSlideLeft").then(() => {
               this.generateOneRandomTile();
-              this.$store.commit("addSteps");
+              this.$store.commit("addUndoSteps");
             });
           }
           break;
@@ -220,7 +224,7 @@ export default {
           if (this.canTilesSlideRight()) {
             this.$store.dispatch("TilesSlideRight").then(() => {
               this.generateOneRandomTile();
-              this.$store.commit("addSteps");
+              this.$store.commit("addUndoSteps");
             });
           }
           break;

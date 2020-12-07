@@ -4,10 +4,11 @@ export const initialiseState = (state, playload) => {
   Object.assign(state, playload);
 };
 
+// generate a two dimensions array
 export const initGrids = (state, value) => {
   const [row, column] = value;
   state.grids = Array(row)
-    .fill()
+    .fill(0)
     .map(() => Array(column).fill(0));
   LOG && window.console.log(state.grids, "grids");
 };
@@ -41,11 +42,11 @@ export const setColumn = (state, value) => {
 };
 
 export const setWinValue = (state, value) => {
-  state.winValue = value;
+  state.winTileValue = value;
 };
 
 export const setMaxUndoSteps = (state, value) => {
-  state.maxUndoSteps = value;
+  state.maxUndoStepsAmount = value;
 };
 
 export const addNewTile = (state, { randomTile, randomValue }) => {
@@ -61,7 +62,7 @@ export const setUndoSteps = (state, value) => {
   state.undoSteps = value;
 };
 
-export const addSteps = (state) => {
+export const addUndoSteps = (state) => {
   let clonedState = JSON.parse(JSON.stringify(state));
   LOG && window.console.log(clonedState, "clonedState");
   LOG && window.console.log(state.undoSteps, "undoSteps");
@@ -73,20 +74,21 @@ export const addSteps = (state) => {
     status: clonedState.status,
   });
   LOG && window.console.log(state.undoSteps, "undoSteps");
-  if (state.undoSteps.length - 1 > state.maxUndoSteps) state.undoSteps.shift();
+  if (state.undoSteps.length - 1 > state.maxUndoStepsAmount)
+    state.undoSteps.shift();
 };
 
 export const undo = (state) => {
   state.undoSteps.splice(-1, 1);
   LOG && window.console.log(state.undoSteps, "step");
-  const step = JSON.parse(
+  const clonedUndoStep = JSON.parse(
     JSON.stringify(state.undoSteps[state.undoSteps.length - 1])
   );
-  state.tiles = step.tiles;
-  state.grids = step.grids;
-  state.stats = step.stats;
-  state.isCollided = step.isCollided;
-  state.status = step.status;
+  state.tiles = clonedUndoStep.tiles;
+  state.grids = clonedUndoStep.grids;
+  state.stats = clonedUndoStep.stats;
+  state.isCollided = clonedUndoStep.isCollided;
+  state.status = clonedUndoStep.status;
   LOG && window.console.log(state, "state");
 };
 
@@ -98,7 +100,7 @@ const increaseScore = (state, value) => {
     state.stats.bestScore = state.stats.currentScore;
 };
 
-// get all TileItems which are not zero
+// get all Tiles which their value are not zero
 const getFilledTiles = (state) => {
   const [row, column] = state.boardSize;
   const grids = state.grids;
@@ -117,16 +119,17 @@ const getFilledTiles = (state) => {
   return filledTiles;
 };
 
-const transferGridsToTiles = (state, value) => {
+// two dimensions array to one dimension array
+const transferGridsToTiles = (state, grids) => {
   const [row, column] = state.boardSize;
   let tiles = [];
   for (let x = 0; x < row; x++) {
     for (let y = 0; y < column; y++) {
-      if (value[x][y] != 0)
+      if (grids[x][y] != 0)
         tiles.push({
           row: x,
           column: y,
-          value: value[x][y],
+          value: grids[x][y],
         });
     }
   }
@@ -152,9 +155,7 @@ export const tilesSlideUp = (state) => {
     });
     // {row: 1, column: 0, value: 2}
     // {row: 3, column: 0, value: 4}
-    // LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
-    let lineFilledTilesLength = lineFilledTiles.length;
-    for (let j = 0; j < lineFilledTilesLength; j++) {
+    for (let j = 0; j < lineFilledTiles.length; j++) {
       // [0,
       //  0,
       //  0,
@@ -187,9 +188,7 @@ export const tilesSlideDown = (state) => {
         return item.column === i;
       })
       .reverse();
-
-    let lineFilledTilesLength = lineFilledTiles.length;
-    for (let j = 0; j < lineFilledTilesLength; j++) {
+    for (let j = 0; j < lineFilledTiles.length; j++) {
       grids[lineFilledTiles[j].row][lineFilledTiles[j].column] = 0;
       // [3][0];
       // [2][0];
@@ -213,8 +212,7 @@ export const tilesSlideLeft = (state) => {
     });
     // {row: 0, column: 1, value: 2}
     // {row: 0, column: 3, value: 4}
-    let lineFilledTilesLength = lineFilledTiles.length;
-    for (let j = 0; j < lineFilledTilesLength; j++) {
+    for (let j = 0; j < lineFilledTiles.length; j++) {
       // [0, 0, 0, 0];
       grids[lineFilledTiles[j].row][lineFilledTiles[j].column] = 0;
       // [2, 4, 0, 0];
@@ -241,8 +239,7 @@ export const tilesSlideRight = (state) => {
     // {row: 0, column: 3, value: 4}
     // {row: 0, column: 1, value: 2}
     // LOG && window.console.log(lineFilledTiles, "lineFilledTiles");
-    let lineFilledTilesLength = lineFilledTiles.length;
-    for (let j = 0; j < lineFilledTilesLength; j++) {
+    for (let j = 0; j < lineFilledTiles.length; j++) {
       // [0, 0, 0, 0];
       grids[lineFilledTiles[j].row][lineFilledTiles[j].column] = 0;
       // [0, 0, 2, 4];
