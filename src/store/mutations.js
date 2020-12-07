@@ -265,7 +265,7 @@ export const mergeCollidedTilesForUpMove = (state) => {
   const [row, column] = state.boardSize;
   let grids = state.grids;
   for (let i = 0; i < column; i++) {
-    top: for (let j = 0; j < row - 1; j++) {
+    for (let j = 0; j < row - 1; j++) {
       // if a tile is not zero and it is the same as the down neighbor, this tile multiple 2
       // increase current score here
       // the right neighbor becomes zero then
@@ -282,7 +282,6 @@ export const mergeCollidedTilesForUpMove = (state) => {
         grids[j][i] *= 2;
         increaseScore(state, grids[j][i]);
         grids[j + 1][i] = 0;
-        break top;
       }
     }
   }
@@ -295,7 +294,7 @@ export const mergeCollidedTilesForDownMove = (state) => {
   let grids = state.grids;
   // LOG && window.console.log(grids, "grid");
   for (let i = 0; i < column; i++) {
-    top: for (let j = row - 1; j > 0; j--) {
+    for (let j = row - 1; j > 0; j--) {
       // if a tile is not zero and it is the same as the up neighbor, this tile multiple 2
       // increase current score here
       // the right neighbor becomes zero then
@@ -314,7 +313,6 @@ export const mergeCollidedTilesForDownMove = (state) => {
         grids[j][i] *= 2;
         increaseScore(state, grids[j][i]);
         grids[j - 1][i] = 0;
-        break top;
       }
     }
   }
@@ -326,7 +324,7 @@ export const mergeCollidedTilesForLeftMove = (state) => {
   const [row, column] = state.boardSize;
   let grids = state.grids;
   for (let i = 0; i < row; i++) {
-    top: for (let j = 0; j < column - 1; j++) {
+    for (let j = 0; j < column - 1; j++) {
       // if a tile is not zero and it is the same as the right neighbor, this tile multiple 2
       // increase current score here
       // the right neighbor becomes zero then
@@ -336,7 +334,6 @@ export const mergeCollidedTilesForLeftMove = (state) => {
         grids[i][j] *= 2;
         increaseScore(state, grids[i][j]);
         grids[i][j + 1] = 0;
-        break top;
       }
     }
     LOG && window.console.log(state.grids, "grids");
@@ -348,7 +345,7 @@ export const mergeCollidedTilesForRightMove = (state) => {
   const [row, column] = state.boardSize;
   let grids = state.grids;
   for (let i = 0; i < row; i++) {
-    top: for (let j = column - 1; j > 0; j--) {
+    for (let j = column - 1; j > 0; j--) {
       // if a tile is not zero and it is the same as the right neighbor, this tile multiple 2
       // increase current score here
       // the right neighbor becomes zero then
@@ -361,7 +358,6 @@ export const mergeCollidedTilesForRightMove = (state) => {
         grids[i][j] *= 2;
         increaseScore(state, grids[i][j]);
         grids[i][j - 1] = 0;
-        break top;
       }
     }
     LOG && window.console.log(state.grids, "grids");
